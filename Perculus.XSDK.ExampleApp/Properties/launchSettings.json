@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "Perculus.XSDK.ExampleApp": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "PAPI_PASSWORD": "",
+        "PAPI_USERNAME": "",
+        "PAPI_ACCOUNT_ID": ""
+      }
+    }
+  }
+}

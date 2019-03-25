@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2003
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Perculus.XSDK", "Perculus.XSDK\Perculus.XSDK.csproj", "{DE511328-031C-4958-AE0C-8EB86B73F52C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Perculus.XSDK.ExampleApp", "Perculus.XSDK.ExampleApp\Perculus.XSDK.ExampleApp.csproj", "{D71EBEA3-65F9-4390-A17C-F2C37214A4BB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DE511328-031C-4958-AE0C-8EB86B73F52C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE511328-031C-4958-AE0C-8EB86B73F52C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE511328-031C-4958-AE0C-8EB86B73F52C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE511328-031C-4958-AE0C-8EB86B73F52C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D71EBEA3-65F9-4390-A17C-F2C37214A4BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D71EBEA3-65F9-4390-A17C-F2C37214A4BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D71EBEA3-65F9-4390-A17C-F2C37214A4BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D71EBEA3-65F9-4390-A17C-F2C37214A4BB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1A6C6C0A-F8B5-4EBF-B3FC-C4D7873AB8B7}
+	EndGlobalSection
+EndGlobal
