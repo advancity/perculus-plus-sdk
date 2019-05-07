@@ -6,6 +6,11 @@ Perculus+ is the last version of Perculus virtual classroom platform which is de
 
 Perculus SDK+ is a class library that is built on top of Perculus+ REST API.
 
-Also, you can find an example app within this repository. It demonstrates how to utilize the SDK.
+There are two versions of the SDK and both are developed by C#:
 
-The programming language is C# and .Net Core 2.1 is targeted.
+1. Perculus.XSDK: This targets .Net Core 2.1.
+2. Perculus.XSDK.Framework: This targets .Net Framework 4.6.
+
+For each version, there is an example application.
+
+The application codes of each version are almost same. There are slight differences. In the future, we aim to decrease the amount of duplicate code.
