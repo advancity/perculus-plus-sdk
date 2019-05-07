@@ -7,11 +7,26 @@ namespace Perculus.XSDK.ExampleApp
 {
     internal class Common
     {
-        public static Perculus CreatePerculusClient()
+        private static Perculus _perculusClient = null;
+
+        public static Perculus CreatePerculusClient(bool createNewInstance = false)
         {
+            Perculus client = null;
+
+            if (!createNewInstance && _perculusClient != null)
+            {
+                return _perculusClient;
+            }
+
             var config = Config.GetInstance();
-            Perculus perculus = new Perculus(new Uri(config.API_URL), new Uri(config.AUTH_URL), config.ACCOUNT_ID, config.USERNAME, config.PASSWORD, config.LOG_FILE_PATH);
-            return perculus;
+            client = new Perculus(new Uri(config.API_URL), new Uri(config.AUTH_URL), config.ACCOUNT_ID, config.USERNAME, config.PASSWORD, config.LOG_FILE_PATH);
+
+            if (!createNewInstance)
+            {
+                _perculusClient = client;
+            }
+
+            return client;
         }
 
         public static void HandleErrorResponse(ApiErrorResponse response)

@@ -2,6 +2,7 @@
 using Perculus.XSDK.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Text;
 
@@ -118,7 +119,7 @@ namespace Perculus.XSDK.Components
             }
 
             var request = HttpWebClient.CreateWebRequest("PUT", BuildRoute($"user/{userId}/password?password={password}"));
-            var response = HttpWebClient.SendWebRequest(request);
+            var response = HttpWebClient.SendWebRequest(request, password);
             ApiErrorResponse error = null;
             bool success = false;
 
@@ -133,6 +134,31 @@ namespace Perculus.XSDK.Components
             }
 
             return (success, error);
+        }
+
+
+        /// <summary>
+        /// Search Users using user filter
+        /// </summary>
+        /// <param name="filter">UserFilter Model</param>
+        /// <returns>A user view list object and error info if error occurs</returns>
+        public (List<UserView> users, ApiErrorResponse error) SearchUsers(UserFilter filter)
+        {
+            var request = HttpWebClient.CreateWebRequest("GET", BuildRoute($"user?{filter.ToQueryString()}"));
+            var response = HttpWebClient.SendWebRequest(request);
+            List<UserView> userViews = null;
+            ApiErrorResponse error = null;
+
+            if (response != null)
+            {
+                string result = HttpWebClient.GetResponseBody(response);
+                if (response.StatusCode == HttpStatusCode.OK)
+                    userViews = result.ToObject<List<UserView>>();
+                else
+                    error = response.ToErrorResponse();
+            }
+
+            return (userViews, error);
         }
 
         /// <summary>

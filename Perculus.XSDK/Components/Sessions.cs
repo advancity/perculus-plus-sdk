@@ -3,6 +3,7 @@ using Perculus.XSDK.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Text;
 
@@ -40,6 +41,32 @@ namespace Perculus.XSDK.Components
 
             return (sessionView, error);
         }
+
+        /// <summary>
+        /// Search Sessions using session filter
+        /// </summary>
+        /// <param name="filter">SessionFilter Model</param>
+        /// <returns>A session view list object and error info if error occurs</returns>
+        public (List<SessionView> sessions, ApiErrorResponse error) SearchSessions(SessionFilter filter)
+        {
+            string query = filter.ToQueryString();
+            var request = HttpWebClient.CreateWebRequest("GET", BuildRoute($"session?{query}"));
+            var response = HttpWebClient.SendWebRequest(request);
+            List<SessionView> sessionsViews = null;
+            ApiErrorResponse error = null;
+
+            if (response != null)
+            {
+                string result = HttpWebClient.GetResponseBody(response);
+                if (response.StatusCode == HttpStatusCode.OK)
+                    sessionsViews = result.ToObject<List<SessionView>>();
+                else
+                    error = response.ToErrorResponse();
+            }
+
+            return (sessionsViews, error);
+        }
+
 
         /// <summary>
         /// Creates a session 

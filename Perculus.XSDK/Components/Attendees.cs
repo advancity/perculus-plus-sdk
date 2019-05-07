@@ -233,6 +233,40 @@ namespace Perculus.XSDK.Components
             return (attendeeView, error);
         }
 
+
+        /// <summary>
+        /// Search for attendees in a specefic session
+        /// </summary>
+        /// <param name="sessionId"></param>
+        /// <param name="attendanceCode"></param>
+        /// <returns></returns>
+        public (List<AttendeeView> attendees, ApiErrorResponse error) SearchAttendees(string sessionId, AttendeeFilter filter)
+        {
+            if (String.IsNullOrEmpty(sessionId))
+            {
+                throw new ArgumentNullException(nameof(sessionId));
+            }
+
+            var filterQuery = filter.ToQueryString();
+            var request = HttpWebClient.CreateWebRequest("GET", BuildRoute($"session/{sessionId}/attendees?{filterQuery}"));
+            var response = HttpWebClient.SendWebRequest(request);
+            List<AttendeeView> attendeeViews = null;
+            ApiErrorResponse error = null;
+
+            if (response != null)
+            {
+                string result = HttpWebClient.GetResponseBody(response);
+                if (response.StatusCode == HttpStatusCode.OK)
+                    attendeeViews = result.ToObject<List<AttendeeView>>();
+                else
+                    error = response.ToErrorResponse();
+            }
+
+            return (attendeeViews, error);
+        }
+
+
+
         /// <summary>
         /// Get attendee by session id and email
         /// </summary>

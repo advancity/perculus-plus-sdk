@@ -33,6 +33,20 @@ namespace Perculus.XSDK.ExampleApp
             return user;
         }
 
+        public static List<UserView> SearchUsers(UserFilter filter)
+        {
+            var perculus = Common.CreatePerculusClient();
+            (List<UserView> users, ApiErrorResponse error) = perculus.Users.SearchUsers(filter);
+
+            if (error != null)
+            {
+                Common.HandleErrorResponse(error);
+            }
+
+            return users;
+        }
+
+
         public static string CreateUser(string email, string username)
         {
             var perculus = Common.CreatePerculusClient();
@@ -92,7 +106,7 @@ namespace Perculus.XSDK.ExampleApp
                 user.surname = "Newsurname";
                 user.role = "a";
             }
-            
+
             ApiErrorResponse error = null;
             (user, error) = perculus.Users.UpdateUser(user);
 
@@ -130,17 +144,13 @@ namespace Perculus.XSDK.ExampleApp
         {
             var perculus = Common.CreatePerculusClient();
             var (success, error) = perculus.Users.ChangeUserPassword(userId, password);
-            if (success)
-            {
-                return true;
-            }
 
-            if (error != null)
+            if (!success && error != null)
             {
                 Common.HandleErrorResponse(error);
             }
 
-            return false;
+            return success;
         }
     }
 }

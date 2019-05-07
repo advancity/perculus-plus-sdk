@@ -33,6 +33,7 @@ namespace Perculus.XSDK.ExampleApp
             {
                 return session.session_id;
             }
+
             return null;
         }
 
@@ -46,8 +47,22 @@ namespace Perculus.XSDK.ExampleApp
             {
                 Common.HandleErrorResponse(error);
             }
-            
+
             return session;
+        }
+
+        public static List<SessionView> ListSessions(SessionFilter filter)
+        {
+            var perculus = Common.CreatePerculusClient();
+
+            (List<SessionView> sessions, ApiErrorResponse error) = perculus.Sessions.SearchSessions(filter);
+
+            if (error != null)
+            {
+                Common.HandleErrorResponse(error);
+            }
+
+            return sessions;
         }
 
         public static string UpdateSession(string session_id)
@@ -77,6 +92,7 @@ namespace Perculus.XSDK.ExampleApp
             {
                 return session.session_id;
             }
+
             return null;
         }
 
@@ -84,16 +100,13 @@ namespace Perculus.XSDK.ExampleApp
         {
             var perculus = Common.CreatePerculusClient();
             var (result, error) = perculus.Sessions.DeleteBySessionId(sessionId);
-            if (result)
-            {
-                return true;
-            }
-            else
+
+            if (!result && error != null)
             {
                 Common.HandleErrorResponse(error);
-                return false;
             }
-        }
 
+            return result;
+        }
     }
 }

@@ -15,12 +15,14 @@ namespace Perculus.XSDK.ExampleApp
             var config = Config.GetInstance();
             var userEmail = "test-user-" + Guid.NewGuid() + "@advancity.com.tr";
             var username = "test-user-" + Guid.NewGuid();
+            var userId = String.Empty;
+            var sessionId = String.Empty;
 
-            #region USERS
             try
             {
+                #region USERS
                 HEADER("Creating a user");
-                string userId = UserMethods.CreateUser(userEmail, username);
+                userId = UserMethods.CreateUser(userEmail, username);
 
                 if (!String.IsNullOrEmpty(userId))
                 {
@@ -43,6 +45,16 @@ namespace Perculus.XSDK.ExampleApp
                         {
                             OK("Fetched user information by username: {0}", JsonConvert.SerializeObject(user));
                         }
+
+                        HEADER("Searching users");
+                        List<UserView> users = UserMethods.SearchUsers(new UserFilter()
+                        {
+                            Role = "u",
+                            PageNumber = 1,
+                            PageSize = 3,
+                            UserName = username,
+                        });
+                        OK("{0} Users Found {1}", users.Count.ToString(), JsonConvert.SerializeObject(users));
 
                         HEADER("Updating user");
                         string updatedUserId = UserMethods.UpdateUser(userId, user);
@@ -68,21 +80,21 @@ namespace Perculus.XSDK.ExampleApp
 
                 #region SESSIONS & Attendees
                 HEADER("Creating a session");
-                string session_id = SessionMethods.CreateSession();
+                sessionId = SessionMethods.CreateSession();
 
-                if (!String.IsNullOrEmpty(session_id))
+                if (!String.IsNullOrEmpty(sessionId))
                 {
-                    OK("Created session {0}", session_id);
+                    OK("Created session {0}", sessionId);
                 }
                 else
                 {
                     ERROR("Could not create session");
                 }
 
-                if (!String.IsNullOrEmpty(session_id))
+                if (!String.IsNullOrEmpty(sessionId))
                 {
                     HEADER("Getting the session");
-                    var session = SessionMethods.GetSession(session_id);
+                    var session = SessionMethods.GetSession(sessionId);
                     if (session != null)
                     {
                         OK("Fetched session {0}. {1}{2}", session.session_id, Environment.NewLine, JsonConvert.SerializeObject(session));
@@ -93,10 +105,10 @@ namespace Perculus.XSDK.ExampleApp
                     }
                 }
 
-                if (!String.IsNullOrEmpty(session_id))
+                if (!String.IsNullOrEmpty(sessionId))
                 {
                     HEADER("Updating the session");
-                    var session_id_updated = SessionMethods.UpdateSession(session_id);
+                    var session_id_updated = SessionMethods.UpdateSession(sessionId);
                     if (!String.IsNullOrEmpty(session_id_updated))
                     {
                         OK("Updated session {0}", session_id_updated);
@@ -107,10 +119,30 @@ namespace Perculus.XSDK.ExampleApp
                     }
                 }
 
-                if (!String.IsNullOrEmpty(userId) && !String.IsNullOrEmpty(session_id))
+                HEADER("Search Sessions");
+
+                var sessionFilter = new SessionFilter()
                 {
-                    HEADER("Adding attendee by user id {0} to session {1}", userId, session_id);
-                    if (AttendeeMethods.AddAttendeeByUserId(session_id, userId) != null)
+                    //SessionName = "SessionName",
+                    BeginDate = DateTime.Now.AddMinutes(-10),
+                    PageNumber = 1,
+                    PageSize = 10
+                };
+
+                var sessionsList = SessionMethods.ListSessions(sessionFilter);
+
+                if (sessionsList != null && sessionsList.Count > 0)
+                {
+                    OK("{0} Sessions Found {1}", sessionsList.Count.ToString(), JsonConvert.SerializeObject(sessionsList));
+                }
+                else
+                {
+                    ERROR("Sessions could not be found");
+                }
+                if (!String.IsNullOrEmpty(userId) && !String.IsNullOrEmpty(sessionId))
+                {
+                    HEADER("Adding attendee by user id {0} to session {1}", userId, sessionId);
+                    if (AttendeeMethods.AddAttendeeByUserId(sessionId, userId) != null)
                     {
                         OK("Created attendee");
                     }
@@ -119,8 +151,27 @@ namespace Perculus.XSDK.ExampleApp
                         ERROR("Could not create attendee");
                     }
 
+                    HEADER("Searching for an attendee in session {0}", sessionId);
+                    var attendeeSearchFilter = new AttendeeFilter()
+                    {
+                        UserId = userId,
+                        Role = "a",
+                        PageSize = 10,
+                        PageNumber = 1
+                    };
+
+                    var attendees = AttendeeMethods.SearchAttendees(sessionId, attendeeSearchFilter);
+                    if (attendees != null && attendees.Count > 0)
+                    {
+                        OK("{0} Attendees Found: {1}", attendees.Count.ToString(), JsonConvert.SerializeObject(attendees));
+                    }
+                    else
+                    {
+                        ERROR("Attendee Not Found");
+                    }
+
                     HEADER("Deleting the attendee by user id");
-                    if (AttendeeMethods.DeleteAttendee(session_id, userId))
+                    if (AttendeeMethods.DeleteAttendee(sessionId, userId))
                     {
                         OK("Deleted attendee");
                     }
@@ -129,15 +180,15 @@ namespace Perculus.XSDK.ExampleApp
                         ERROR("Could not delete attendee");
                     }
 
-                    HEADER("Adding attendee by user id {0} to session {1} using multiple adding method", userId, session_id);
-                    AttendeesPostResult testMultipleAttendeesByUserId = AttendeeMethods.AddMultipleAttendeesByUserId(session_id, userId);
+                    HEADER("Adding attendee by user id {0} to session {1} using multiple adding method", userId, sessionId);
+                    AttendeesPostResult testMultipleAttendeesByUserId = AttendeeMethods.AddMultipleAttendeesByUserId(sessionId, userId);
                     if (testMultipleAttendeesByUserId.approved != null && testMultipleAttendeesByUserId.approved.Count == 1)
                     {
                         OK("Created attendee");
 
                         var attendanceCode = testMultipleAttendeesByUserId.approved[0].AttendanceCode;
                         HEADER("Deleting the newly created attendee {0}", attendanceCode);
-                        if (AttendeeMethods.DeleteAttendee(session_id, attendanceCode))
+                        if (AttendeeMethods.DeleteAttendee(sessionId, attendanceCode))
                         {
                             OK("Deleted attendee");
                         }
@@ -145,14 +196,13 @@ namespace Perculus.XSDK.ExampleApp
                         {
                             ERROR("Could not delete attendee");
                         }
-
                     }
                     else
                     {
                         ERROR("Could not create attendee");
                     }
                 }
-                if (!String.IsNullOrEmpty(session_id))
+                if (!String.IsNullOrEmpty(sessionId))
                 {
                     HEADER("Adding external attendee (without user id)");
                     var newAttendee = new AttendeeView()
@@ -163,7 +213,8 @@ namespace Perculus.XSDK.ExampleApp
                         Mobile = "05412345678",
                         Role = "u",
                     };
-                    AttendeeView testAddAttendee = AttendeeMethods.AddAttendee(session_id, newAttendee);
+                    AttendeeView testAddAttendee = AttendeeMethods.AddAttendee(sessionId, newAttendee);
+
                     if (testAddAttendee != null)
                     {
 
@@ -171,7 +222,7 @@ namespace Perculus.XSDK.ExampleApp
                         OK("Created attendee -> Join address: {0}", joiningAddress);
 
                         HEADER("Deleting newly created attendee {0}", testAddAttendee.AttendanceCode);
-                        if (AttendeeMethods.DeleteAttendee(session_id, testAddAttendee.AttendanceCode))
+                        if (AttendeeMethods.DeleteAttendee(sessionId, testAddAttendee.AttendanceCode))
                         {
                             OK("Deleted attendee");
                         }
@@ -181,9 +232,15 @@ namespace Perculus.XSDK.ExampleApp
                         }
                     }
                 }
-
                 #endregion SESSIONS
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Exception occured. Details: " + Environment.NewLine + ex.ToString());
+            }
 
+            try
+            {
                 #region Clean-UP
                 HEADER("CLEAN-UP");
                 if (!String.IsNullOrEmpty(userId))
@@ -198,15 +255,15 @@ namespace Perculus.XSDK.ExampleApp
                     }
                 }
 
-                if (!String.IsNullOrEmpty(session_id))
+                if (!String.IsNullOrEmpty(sessionId))
                 {
-                    if (SessionMethods.DeleteSession(session_id))
+                    if (SessionMethods.DeleteSession(sessionId))
                     {
-                        OK("Deleted session {0}", session_id);
+                        OK("Deleted session {0}", sessionId);
                     }
                     else
                     {
-                        ERROR("Could not delete session {0}", session_id);
+                        ERROR("Could not delete session {0}", sessionId);
                     }
                 }
                 #endregion Clean-UP
@@ -215,7 +272,6 @@ namespace Perculus.XSDK.ExampleApp
             {
                 Console.WriteLine("Exception occured. Details: " + Environment.NewLine + ex.ToString());
             }
-
             HEADER("THE END");
 
             Console.ReadKey();

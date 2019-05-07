@@ -7,6 +7,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Perculus.XSDK", "Perculus.X
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Perculus.XSDK.ExampleApp", "Perculus.XSDK.ExampleApp\Perculus.XSDK.ExampleApp.csproj", "{D71EBEA3-65F9-4390-A17C-F2C37214A4BB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Perculus.XSDK.Framework", "Perculus.XSDK.Framework\Perculus.XSDK.Framework.csproj", "{6BC9A09D-3E42-43BA-BA09-5C483ADBDB7F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DotNetCore", "DotNetCore", "{CD8A5CFB-CADA-409B-AEF2-A0699B384B74}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DotNetFramework", "DotNetFramework", "{609282C3-0743-4A1B-9E4E-C37029755D3A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Perculus.XSDK.Framework.ExampleApp", "Perculus.XSDK.Framework.ExampleApp\Perculus.XSDK.Framework.ExampleApp.csproj", "{507759DE-ECBE-4477-9E4A-A2E324F6F1A2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,9 +29,23 @@ Global
 		{D71EBEA3-65F9-4390-A17C-F2C37214A4BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D71EBEA3-65F9-4390-A17C-F2C37214A4BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D71EBEA3-65F9-4390-A17C-F2C37214A4BB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6BC9A09D-3E42-43BA-BA09-5C483ADBDB7F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6BC9A09D-3E42-43BA-BA09-5C483ADBDB7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6BC9A09D-3E42-43BA-BA09-5C483ADBDB7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6BC9A09D-3E42-43BA-BA09-5C483ADBDB7F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{507759DE-ECBE-4477-9E4A-A2E324F6F1A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{507759DE-ECBE-4477-9E4A-A2E324F6F1A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{507759DE-ECBE-4477-9E4A-A2E324F6F1A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{507759DE-ECBE-4477-9E4A-A2E324F6F1A2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{DE511328-031C-4958-AE0C-8EB86B73F52C} = {CD8A5CFB-CADA-409B-AEF2-A0699B384B74}
+		{D71EBEA3-65F9-4390-A17C-F2C37214A4BB} = {CD8A5CFB-CADA-409B-AEF2-A0699B384B74}
+		{6BC9A09D-3E42-43BA-BA09-5C483ADBDB7F} = {609282C3-0743-4A1B-9E4E-C37029755D3A}
+		{507759DE-ECBE-4477-9E4A-A2E324F6F1A2} = {609282C3-0743-4A1B-9E4E-C37029755D3A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1A6C6C0A-F8B5-4EBF-B3FC-C4D7873AB8B7}

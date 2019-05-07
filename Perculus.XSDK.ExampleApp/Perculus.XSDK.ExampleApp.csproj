@@ -7,10 +7,14 @@
 
   <ItemGroup>
     <None Remove="appsettings.json" />
+    <None Remove="appsettings.local.json" />
     <None Remove="README.md" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="appsettings.local.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="README.md">
       <SubType>Code</SubType>
     </Content>

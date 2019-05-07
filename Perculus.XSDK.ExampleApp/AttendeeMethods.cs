@@ -44,7 +44,7 @@ namespace Perculus.XSDK.ExampleApp
         public static AttendeeView AddAttendee(string sessionId, AttendeeView newAttendee)
         {
             Perculus perculus = Common.CreatePerculusClient();
-            
+
             (AttendeeView attendee, ApiErrorResponse error) = perculus.Attendees.AddAttendee(sessionId, newAttendee);
 
             if (error != null)
@@ -59,6 +59,19 @@ namespace Perculus.XSDK.ExampleApp
         {
             Perculus perculus = Common.CreatePerculusClient();
             (bool result, ApiErrorResponse error) = perculus.Attendees.DeleteByAttendanceCodeOrUserId(sessionId, userIdOrAttendanceCode);
+
+            if (error != null)
+            {
+                Common.HandleErrorResponse(error);
+            }
+
+            return result;
+        }
+
+        public static List<AttendeeView> SearchAttendees(string sessionId, AttendeeFilter filter)
+        {
+            Perculus perculus = Common.CreatePerculusClient();
+            (List<AttendeeView> result, ApiErrorResponse error) = perculus.Attendees.SearchAttendees(sessionId, filter);
 
             if (error != null)
             {

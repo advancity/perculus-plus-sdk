@@ -79,15 +79,21 @@ namespace Perculus.XSDK
 
         public static string GetResponseBody(HttpWebResponse response)
         {
+            var responseBody = String.Empty;
+
             if (response != null)
             {
-                using (var streamReader = new StreamReader(response.GetResponseStream()))
+                var stream = response.GetResponseStream();
+                if (stream != null)
                 {
-                    return streamReader.ReadToEnd();
+                    using (var streamReader = new StreamReader(stream))
+                    {
+                        responseBody = streamReader.ReadToEnd();
+                    }
                 }
             }
-            else
-                return "";
+
+            return responseBody;
         }
 
         #region

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Net;
 using System.Text;
 
 namespace Perculus.XSDK.Extensions
@@ -49,6 +50,19 @@ namespace Perculus.XSDK.Extensions
                 jValue?.ToString(CultureInfo.InvariantCulture);
 
             return new Dictionary<string, string> { { token.Path, value } };
+        }
+
+        public static string ToQueryString(this object obj)
+        {
+            string query = "";
+            var filterDic = obj.ToKeyValue();
+            if (filterDic != null)
+            {
+                query = string.Join("&", filterDic.Keys.Select(key =>
+                    WebUtility.UrlEncode(key) + "=" + WebUtility.UrlEncode(filterDic[key]
+                )));
+            }
+            return query;
         }
     }
 }
