@@ -16,6 +16,12 @@ namespace Perculus.XSDK.ExampleApp
             .SetBasePath(Directory.GetCurrentDirectory())
             .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
 
+            // override settings with local settings
+            // appsettings.local.json is ignored by git.
+            if (File.Exists("appsettings.local.json")) { 
+                builder.AddJsonFile("appsettings.local.json", optional: true, reloadOnChange: true);
+            }
+
             IConfigurationRoot configuration = builder.Build();
 
             var baseUrl = configuration.GetSection("AppSettings")["base_url"];
