@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Perculus.XSDK.Models
+namespace Perculus.XSDK.Models.Enum
 {
     public enum ApiErrorCode : int
     {

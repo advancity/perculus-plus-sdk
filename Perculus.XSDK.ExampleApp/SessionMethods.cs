@@ -1,4 +1,5 @@
 ﻿using Perculus.XSDK.Models;
+using Perculus.XSDK.Models.PostViews;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,27 +12,29 @@ namespace Perculus.XSDK.ExampleApp
         {
             var perculus = Common.CreatePerculusClient();
 
-            Models.SessionView session = new Models.SessionView
+            PostSessionView session = new PostSessionView
             {
                 name = "test session",
                 lang = "tr-TR",
                 description = "description",
                 duration = 15,
                 start_date = DateTimeOffset.Now,
-                status = Models.Enum.ActiveStatus.Active
+                status = Models.Enum.SessionActiveStatus.Active
             };
 
+            SessionView createdSession = null;
             ApiErrorResponse error = null;
-            (session, error) = perculus.Sessions.CreateSession(session);
+
+            (createdSession, error) = perculus.Sessions.CreateSession(session);
 
             if (error != null)
             {
                 Common.HandleErrorResponse(error);
             }
 
-            if (session != null && !String.IsNullOrEmpty(session.session_id))
+            if (createdSession != null && !String.IsNullOrEmpty(createdSession.session_id))
             {
-                return session.session_id;
+                return createdSession.session_id;
             }
 
             return null;
