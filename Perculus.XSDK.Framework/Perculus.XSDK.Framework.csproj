@@ -63,7 +63,12 @@
     <Compile Include="Models\Enum\ActiveStatus.cs" />
     <Compile Include="Models\Enum\ApiErrorCode.cs" />
     <Compile Include="Models\Enum\ReplayStatus.cs" />
+    <Compile Include="Models\Enum\SessionActiveStatus.cs" />
+    <Compile Include="Models\Enum\UserActiveStatus.cs" />
     <Compile Include="Models\PerculusOptions.cs" />
+    <Compile Include="Models\PostViews\PostAttendeeView.cs" />
+    <Compile Include="Models\PostViews\PostSessionView.cs" />
+    <Compile Include="Models\PostViews\PostUserView.cs" />
     <Compile Include="Models\SessionFilter.cs" />
     <Compile Include="Models\SessionView.cs" />
     <Compile Include="Models\UserFilter.cs" />

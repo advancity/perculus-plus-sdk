@@ -1,5 +1,6 @@
 ﻿using Perculus.XSDK.Extensions;
 using Perculus.XSDK.Models;
+using Perculus.XSDK.Models.PostViews;
 using System;
 using System.Collections.Generic;
 using System.Net;
@@ -16,7 +17,7 @@ namespace Perculus.XSDK.Components
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
-        public UserView CreateUser(UserView user, out ApiErrorResponse error)
+        public UserView CreateUser(PostUserView user, out ApiErrorResponse error)
         {
             if (user is null)
             {

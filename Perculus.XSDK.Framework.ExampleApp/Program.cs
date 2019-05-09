@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Perculus.XSDK.Models;
+using Perculus.XSDK.Models.PostViews;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -128,7 +129,7 @@ namespace Perculus.XSDK.ExampleApp
                     PageSize = 10
                 };
 
-                var sessionsList = SessionMethods.ListSessions(sessionFilter);
+                var sessionsList = SessionMethods.SearchSessions(sessionFilter);
 
                 if (sessionsList != null && sessionsList.Count > 0)
                 {
@@ -205,13 +206,13 @@ namespace Perculus.XSDK.ExampleApp
                 if (!String.IsNullOrEmpty(sessionId))
                 {
                     HEADER("Adding external attendee (without user id)");
-                    var newAttendee = new AttendeeView()
+                    var newAttendee = new PostAttendeeView()
                     {
-                        Name = "Test Attendee Name",
-                        Surname = "Test Attendee Surname",
-                        Email = userEmail,
-                        Mobile = "05412345678",
-                        Role = "u",
+                        name = "Test Attendee Name",
+                        surname = "Test Attendee Surname",
+                        email = userEmail,
+                        mobile = "05412345678",
+                        role = "u",
                     };
                     AttendeeView testAddAttendee = AttendeeMethods.AddAttendee(sessionId, newAttendee);
 

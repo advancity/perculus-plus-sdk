@@ -1,4 +1,5 @@
 ﻿using Perculus.XSDK.Models;
+using Perculus.XSDK.Models.PostViews;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -51,7 +52,7 @@ namespace Perculus.XSDK.ExampleApp
         {
             var perculus = Common.CreatePerculusClient();
 
-            Models.UserView user = new Models.UserView
+            PostUserView user = new PostUserView
             {
                 email = email,
                 username = username,
@@ -61,19 +62,20 @@ namespace Perculus.XSDK.ExampleApp
                 expires_at = DateTime.Now.AddDays(5),
                 password = "password",
                 role = "u",
-                status = Models.Enum.ActiveStatus.Active
+                status = Models.Enum.UserActiveStatus.Active
             };
 
-            user = perculus.Users.CreateUser(user, out ApiErrorResponse error);
+            UserView createdUser = null;
+            createdUser = perculus.Users.CreateUser(user, out ApiErrorResponse error);
 
             if (error != null)
             {
                 Common.HandleErrorResponse(error);
             }
 
-            if (user != null && !String.IsNullOrEmpty(user.user_id))
+            if (createdUser != null && !String.IsNullOrEmpty(createdUser.user_id))
             {
-                return user.user_id;
+                return createdUser.user_id;
             }
 
             return null;

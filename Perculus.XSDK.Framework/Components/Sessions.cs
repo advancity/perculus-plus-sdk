@@ -1,5 +1,6 @@
 ﻿using Perculus.XSDK.Extensions;
 using Perculus.XSDK.Models;
+using Perculus.XSDK.Models.PostViews;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -70,7 +71,7 @@ namespace Perculus.XSDK.Components
         /// </summary>
         /// <param name="session">A session view object which holds session data</param>
         /// <returns>The created session object is returned. If an error occurs, error information is returned as well.</returns>
-        public SessionView CreateSession(SessionView session, out ApiErrorResponse error)
+        public SessionView CreateSession(PostSessionView session, out ApiErrorResponse error)
         {
             if (session is null)
             {

@@ -1,4 +1,5 @@
 ﻿using Perculus.XSDK.Models;
+using Perculus.XSDK.Models.PostViews;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -41,7 +42,7 @@ namespace Perculus.XSDK.ExampleApp
             return result;
         }
 
-        public static AttendeeView AddAttendee(string sessionId, AttendeeView newAttendee)
+        public static AttendeeView AddAttendee(string sessionId, PostAttendeeView newAttendee)
         {
             Perculus perculus = Common.CreatePerculusClient();
 

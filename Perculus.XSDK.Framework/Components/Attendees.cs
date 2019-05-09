@@ -6,6 +6,8 @@ using System.Net;
 using System.Text;
 using System.Linq;
 using Newtonsoft.Json;
+using Perculus.XSDK.Models.PostViews;
+using Perculus.XSDK.Models.Enum;
 
 namespace Perculus.XSDK.Components
 {
@@ -27,10 +29,10 @@ namespace Perculus.XSDK.Components
                 throw new ArgumentNullException(nameof(userId));
             }
 
-            var attendee = new AttendeeView
+            var attendee = new PostAttendeeView
             {
-                UserId = userId,
-                Role = role
+                user_id = userId,
+                role = role
             };
             return AddAttendee(sessionId, attendee, out error);
         }
@@ -43,7 +45,7 @@ namespace Perculus.XSDK.Components
         /// <returns></returns>
         public AttendeesPostResult AddMultipleByUserId(string sessionId, IEnumerable<UserIdRoleAttendee> userIdWithRoles, out ApiErrorResponse error)
         {
-            return AddMultiple(sessionId, userIdWithRoles.Select(u => new AttendeeView { UserId = u.UserId, Role = u.Role }), out error);
+            return AddMultiple(sessionId, userIdWithRoles.Select(u => new PostAttendeeView { user_id = u.UserId, role = u.Role }), out error);
         }
 
         /// <summary>
@@ -52,7 +54,7 @@ namespace Perculus.XSDK.Components
         /// <param name="sessionId"></param>
         /// <param name="attendee"></param>
         /// <returns></returns>
-        public AttendeeView AddAttendee(string sessionId, AttendeeView attendee, out ApiErrorResponse responseView)
+        public AttendeeView AddAttendee(string sessionId, PostAttendeeView attendee, out ApiErrorResponse responseView)
         {
             if (String.IsNullOrEmpty(sessionId))
             {
@@ -64,7 +66,7 @@ namespace Perculus.XSDK.Components
                 throw new ArgumentNullException(nameof(attendee));
             }
 
-            AttendeesPostResult result = AddMultiple(sessionId, new AttendeeView[] { attendee }, out ApiErrorResponse response);
+            AttendeesPostResult result = AddMultiple(sessionId, new PostAttendeeView[] { attendee }, out ApiErrorResponse response);
 
             AttendeeView attendeeView = null;
             responseView = response;
@@ -83,7 +85,7 @@ namespace Perculus.XSDK.Components
         /// <param name="sessionId"></param>
         /// <param name="attendees"></param>
         /// <returns></returns>
-        public AttendeesPostResult AddMultiple(string sessionId, IEnumerable<AttendeeView> attendees, out ApiErrorResponse error)
+        public AttendeesPostResult AddMultiple(string sessionId, IEnumerable<PostAttendeeView> attendees, out ApiErrorResponse error)
         {
             if (String.IsNullOrEmpty(sessionId))
             {
