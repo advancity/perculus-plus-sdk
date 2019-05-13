@@ -125,7 +125,7 @@ namespace Perculus.XSDK.ExampleApp
                 var sessionFilter = new SessionFilter()
                 {
                     //session_name = "SessionName",
-                    begin_date = DateTime.Now.AddDays(-10),
+                    begin_date = DateTime.Now.AddMinutes(-10),
                     page_number = 1,
                     page_size = 10
                 };

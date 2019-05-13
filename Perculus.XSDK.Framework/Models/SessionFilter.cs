@@ -6,14 +6,14 @@ namespace Perculus.XSDK.Models
 {
     public class SessionFilter
     {
-        public string SessionId { get; set; }
-        public string SessionName { get; set; }
-        public string Description { get; set; }
-        public string Tags { get; set; }
-        public int? Duration { get; set; }
-        public DateTime? BeginDate { get; set; }
-        public DateTime? EndDate { get; set; }
-        public int PageNumber { get; set; }
-        public int PageSize { get; set; }
+        public string session_id { get; set; }
+        public string session_name { get; set; }
+        public string description { get; set; }
+        public string tags { get; set; }
+        public int? duraiton { get; set; }
+        public DateTime? begin_date { get; set; }
+        public DateTime? end_date { get; set; }
+        public int page_number { get; set; }
+        public int page_size { get; set; }
     }
 }

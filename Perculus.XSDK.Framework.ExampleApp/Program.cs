@@ -49,10 +49,10 @@ namespace Perculus.XSDK.ExampleApp
                         HEADER("Searching users");
                         List<UserView> users = UserMethods.SearchUsers(new UserFilter()
                         {
-                            Role = "u",
-                            PageNumber = 1,
-                            PageSize = 3,
-                            UserName = username,
+                            role = "u",
+                            page_number = 1,
+                            page_size = 3,
+                            username = username,
                         });
                         OK("{0} Users Found {1}", users.Count.ToString(), JsonConvert.SerializeObject(users));
 
@@ -123,10 +123,10 @@ namespace Perculus.XSDK.ExampleApp
 
                 var sessionFilter = new SessionFilter()
                 {
-                    //SessionName = "SessionName",
-                    BeginDate = DateTime.Now.AddMinutes(-10),
-                    PageNumber = 1,
-                    PageSize = 10
+                    //session_name = "SessionName",
+                    begin_date = DateTime.Now.AddMinutes(-10),
+                    page_number = 1,
+                    page_size = 10
                 };
 
                 var sessionsList = SessionMethods.SearchSessions(sessionFilter);
@@ -154,10 +154,10 @@ namespace Perculus.XSDK.ExampleApp
                     HEADER("Searching for an attendee in session {0}", sessionId);
                     var attendeeSearchFilter = new AttendeeFilter()
                     {
-                        UserId = userId,
-                        Role = "a",
-                        PageSize = 10,
-                        PageNumber = 1
+                        user_id = userId,
+                        role = "a",
+                        page_size = 10,
+                        page_number = 1
                     };
 
                     var attendees = AttendeeMethods.SearchAttendees(sessionId, attendeeSearchFilter);
