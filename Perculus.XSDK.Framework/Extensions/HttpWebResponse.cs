@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json;
 using Perculus.XSDK.Models;
-using Perculus.XSDK.Models.Enum;
 using System;
 using System.Collections.Generic;
 using System.Net;

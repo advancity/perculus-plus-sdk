@@ -7,16 +7,18 @@ namespace Perculus.XSDK.Models
 {
     public class AttendeeView
     {
-        public string SessionId { get; set; }
-        public string UserId { get; set; }
-        public string AttendeeId { get; set; }
-        public string AttendanceCode { get; set; }
-        public string Name { get; set; }
-        public string Surname { get; set; }
-        public string Email { get; set; }
-        public string Role { get; set; }
-        public string Mobile { get; set; }
-        public string Avatar { get; set; }
+        public string session_id { get; set; }
+        public string user_id { get; set; }
+        public string attendee_id { get; set; }
+        public string attendance_code { get; set; }
+        public string name { get; set; }
+        public string surname { get; set; }
+        public string email { get; set; }
+        public string role { get; set; }
+        public string mobile { get; set; }
+        public string avatar { get; set; }
+        public DateTime? creation_date { get; set; }
+        public DateTime? updating_date { get; set; }
     }
 
 }

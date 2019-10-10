@@ -1,6 +1,5 @@
 ﻿using Perculus.XSDK.Extensions;
 using Perculus.XSDK.Models;
-using Perculus.XSDK.Models.PostViews;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -47,14 +46,14 @@ namespace Perculus.XSDK.Components
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
-        public (UserView user, ApiErrorResponse error) UpdateUser(UserView user)
+        public (UserView user, ApiErrorResponse error) UpdateUser(string userId, PostUserView user)
         {
             if (user is null)
             {
                 throw new ArgumentNullException(nameof(user));
             }
 
-            var request = HttpWebClient.CreateWebRequest("PUT", BuildRoute($"user/{user.user_id}"));
+            var request = HttpWebClient.CreateWebRequest("PUT", BuildRoute($"user/{userId}"));
             var response = HttpWebClient.SendWebRequest(request, user);
             UserView userView = null;
             ApiErrorResponse error = null;

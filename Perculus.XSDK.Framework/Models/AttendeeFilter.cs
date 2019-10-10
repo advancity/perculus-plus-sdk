@@ -6,14 +6,14 @@ namespace Perculus.XSDK.Models
 {
     public class AttendeeFilter
     {
-        public string user_id { get; set; }
-        public string attendance_code { get; set; }
-        public string name { get; set; }
-        public string surname { get; set; }
-        public string email { get; set; }
-        public string role { get; set; }
-        public string mobile { get; set; }
-        public int page_size { get; set; }
-        public int page_number { get; set; }
+        public string UserId { get; set; }
+        public string AttendanceCode { get; set; }
+        public string Name { get; set; }
+        public string Surname { get; set; }
+        public string Email { get; set; }
+        public string Role { get; set; }
+        public string Mobile { get; set; }
+        public int PageSize { get; set; }
+        public int PageNumber { get; set; }
     }
 }

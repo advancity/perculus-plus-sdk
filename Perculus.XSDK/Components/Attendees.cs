@@ -6,8 +6,6 @@ using System.Net;
 using System.Text;
 using System.Linq;
 using Newtonsoft.Json;
-using Perculus.XSDK.Models.PostViews;
-using Perculus.XSDK.Models.Enum;
 
 namespace Perculus.XSDK.Components
 {
@@ -125,7 +123,7 @@ namespace Perculus.XSDK.Components
         /// <param name="attendance_code"></param>
         /// <param name="attendee"></param>
         /// <returns></returns>
-        public (AttendeeView attendee, ApiErrorResponse error) UpdateByAttendanceCode(string sessionId, string attendanceCode, AttendeeView attendee)
+        public (AttendeeView attendee, ApiErrorResponse error) UpdateByAttendanceCode(string sessionId, string attendanceCode, PostAttendeeView attendee)
         {
             if (String.IsNullOrEmpty(sessionId))
             {
@@ -166,7 +164,7 @@ namespace Perculus.XSDK.Components
         /// <param name="email"></param>
         /// <param name="attendee"></param>
         /// <returns></returns>
-        public (AttendeeView attendee, ApiErrorResponse error) UpdateByEmail(string sessionId, string email, AttendeeView attendee)
+        public (AttendeeView attendee, ApiErrorResponse error) UpdateByEmail(string sessionId, string email, PostAttendeeView attendee)
         {
             if (String.IsNullOrEmpty(sessionId))
             {

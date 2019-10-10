@@ -1,5 +1,4 @@
 ﻿using Perculus.XSDK.Models;
-using Perculus.XSDK.Models.PostViews;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -12,27 +11,25 @@ namespace Perculus.XSDK.ExampleApp
         {
             var perculus = Common.CreatePerculusClient();
 
-            PostSessionView session = new PostSessionView
+            PostSessionView model = new PostSessionView
             {
                 name = "test session",
                 lang = "tr-TR",
                 description = "description",
                 duration = 15,
-                start_date = DateTimeOffset.Now,
-                status = Models.Enum.SessionActiveStatus.Active
+                start_date = DateTimeOffset.Now
             };
 
-            SessionView createdSession = null;
-            createdSession = perculus.Sessions.CreateSession(session, out ApiErrorResponse error);
+            SessionView session = perculus.Sessions.CreateSession(model, out ApiErrorResponse error);
 
             if (error != null)
             {
                 Common.HandleErrorResponse(error);
             }
 
-            if (createdSession != null && !String.IsNullOrEmpty(createdSession.session_id))
+            if (session != null && !String.IsNullOrEmpty(session.session_id))
             {
-                return createdSession.session_id;
+                return session.session_id;
             }
             return null;
         }
@@ -51,7 +48,7 @@ namespace Perculus.XSDK.ExampleApp
             return session;
         }
 
-        public static List<SessionView> SearchSessions(SessionFilter filter)
+        public static List<SessionView> ListSessions(SessionFilter filter)
         {
             var perculus = Common.CreatePerculusClient();
 
@@ -69,18 +66,16 @@ namespace Perculus.XSDK.ExampleApp
         {
             var perculus = Common.CreatePerculusClient();
 
-            Models.SessionView session = new Models.SessionView
+            PostSessionView model = new PostSessionView
             {
                 name = "test updated session",
                 lang = "tr-TR",
-                session_id = session_id,
                 description = "description 1",
                 duration = 15,
-                start_date = DateTimeOffset.Now,
-                status = Models.Enum.ActiveStatus.Active
+                start_date = DateTimeOffset.Now
             };
 
-            session = perculus.Sessions.UpdateSession(session, out ApiErrorResponse error);
+            SessionView session = perculus.Sessions.UpdateSession(session_id, model, out ApiErrorResponse error);
         
             if (error != null)
             {

@@ -9,6 +9,7 @@ using System.Text;
 using Newtonsoft.Json.Linq;
 using System.Globalization;
 using Perculus.XSDK.Extensions;
+using Perculus.XSDK.Models;
 
 namespace Perculus.XSDK
 {
@@ -38,7 +39,7 @@ namespace Perculus.XSDK
             return webrequest;
         }
 
-        public static HttpWebResponse SendWebRequest(HttpWebRequest request, object body = null)
+        public static WebApiResponse SendWebRequest(HttpWebRequest request, object body = null)
         {
             if (request == null) return null;
 
@@ -67,26 +68,30 @@ namespace Perculus.XSDK
                 }
             }
 
+            HttpWebResponse response = null;
             try
             {
-                return (HttpWebResponse)request.GetResponse();
+                response = (HttpWebResponse)request.GetResponse();
             }
             catch (WebException e)
             {
-                return (HttpWebResponse)e.Response;
+                response = (HttpWebResponse)e.Response;
             }
+
+            return new WebApiResponse(response);
         }
 
-        public static string GetResponseBody(HttpWebResponse response)
+        public static string GetResponseBody(WebApiResponse response)
         {
             var responseBody = String.Empty;
 
             if (response != null)
             {
                 var stream = response.GetResponseStream();
-                if (stream != null)
+
+                if (stream != null && stream.CanRead)
                 {
-                    using (var streamReader = new StreamReader(stream))
+                    using (StreamReader streamReader = new StreamReader(stream))
                     {
                         responseBody = streamReader.ReadToEnd();
                     }

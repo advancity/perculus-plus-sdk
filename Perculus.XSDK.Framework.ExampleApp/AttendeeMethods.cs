@@ -1,5 +1,4 @@
 ﻿using Perculus.XSDK.Models;
-using Perculus.XSDK.Models.PostViews;
 using System;
 using System.Collections.Generic;
 using System.Text;

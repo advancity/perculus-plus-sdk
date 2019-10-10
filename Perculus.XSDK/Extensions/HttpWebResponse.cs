@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json;
 using Perculus.XSDK.Models;
-using Perculus.XSDK.Models.Enum;
 using System;
 using System.Collections.Generic;
 using System.Net;
@@ -10,7 +9,7 @@ namespace Perculus.XSDK.Extensions
 {
     public static class HttpWebResponseExtensions
     {
-        public static ApiErrorResponse ToErrorResponse(this HttpWebResponse response, string content = null)
+        public static ApiErrorResponse ToErrorResponse(this WebApiResponse response, string content = null)
         {
             ApiErrorResponse apiErrorResponse = null;
 

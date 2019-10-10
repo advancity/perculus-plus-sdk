@@ -16,9 +16,8 @@ namespace Perculus.XSDK.Models
         public string lang { get; set; }
         public ActiveStatus status { get; set; }
         public ReplayStatus replay_status { get; set; }
-        public string realtime_server { get; set; }
-        public string conference_server { get; set; }
         public string ui_options { get; set; }
+        public DateTimeOffset? creation_date { get; set; }
         public DateTimeOffset? updating_date { get; set; }
     }
 }

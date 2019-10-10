@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json;
 using Perculus.XSDK.Models;
-using Perculus.XSDK.Models.PostViews;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -49,15 +48,30 @@ namespace Perculus.XSDK.ExampleApp
                         HEADER("Searching users");
                         List<UserView> users = UserMethods.SearchUsers(new UserFilter()
                         {
-                            role = "u",
-                            page_number = 1,
-                            page_size = 3,
-                            username = username,
+                            Role = "u",
+                            PageNumber = 1,
+                            PageSize = 3,
+                            UserName = username,
                         });
                         OK("{0} Users Found {1}", users.Count.ToString(), JsonConvert.SerializeObject(users));
 
                         HEADER("Updating user");
-                        string updatedUserId = UserMethods.UpdateUser(userId, user);
+                        PostUserView updatingUser = new PostUserView()
+                        {
+                            active = true,
+                            email = user.email,
+                            expires_at = user.expires_at,
+                            lang = user.lang,
+                            login_allowed = user.login_allowed,
+                            mobile = user.mobile,
+                            name = user.name,
+                            role = user.role,
+                            surname = user.surname,
+                            timezone = user.timezone,
+                            timezone_offset = user.timezone_offset,
+                            username = user.username
+                        };
+                        string updatedUserId = UserMethods.UpdateUser(userId, updatingUser);
                         OK("Updated user {0}", updatedUserId);
                     }
                     else
@@ -123,13 +137,13 @@ namespace Perculus.XSDK.ExampleApp
 
                 var sessionFilter = new SessionFilter()
                 {
-                    //session_name = "SessionName",
-                    begin_date = DateTime.Now.AddMinutes(-10),
-                    page_number = 1,
-                    page_size = 10
+                    //SessionName = "SessionName",
+                    BeginDate = DateTime.Now.AddMinutes(-10),
+                    PageNumber = 1,
+                    PageSize = 10
                 };
 
-                var sessionsList = SessionMethods.SearchSessions(sessionFilter);
+                var sessionsList = SessionMethods.ListSessions(sessionFilter);
 
                 if (sessionsList != null && sessionsList.Count > 0)
                 {
@@ -154,10 +168,10 @@ namespace Perculus.XSDK.ExampleApp
                     HEADER("Searching for an attendee in session {0}", sessionId);
                     var attendeeSearchFilter = new AttendeeFilter()
                     {
-                        user_id = userId,
-                        role = "a",
-                        page_size = 10,
-                        page_number = 1
+                        UserId = userId,
+                        Role = "a",
+                        PageSize = 10,
+                        PageNumber = 1
                     };
 
                     var attendees = AttendeeMethods.SearchAttendees(sessionId, attendeeSearchFilter);
@@ -186,7 +200,7 @@ namespace Perculus.XSDK.ExampleApp
                     {
                         OK("Created attendee");
 
-                        var attendanceCode = testMultipleAttendeesByUserId.approved[0].AttendanceCode;
+                        var attendanceCode = testMultipleAttendeesByUserId.approved[0].attendance_code;
                         HEADER("Deleting the newly created attendee {0}", attendanceCode);
                         if (AttendeeMethods.DeleteAttendee(sessionId, attendanceCode))
                         {
@@ -219,11 +233,11 @@ namespace Perculus.XSDK.ExampleApp
                     if (testAddAttendee != null)
                     {
 
-                        string joiningAddress = string.Format(config.APP_JOIN_URL_FORMAT, testAddAttendee.AttendanceCode);
+                        string joiningAddress = string.Format(config.APP_JOIN_URL_FORMAT, testAddAttendee.attendance_code);
                         OK("Created attendee -> Join address: {0}", joiningAddress);
 
-                        HEADER("Deleting newly created attendee {0}", testAddAttendee.AttendanceCode);
-                        if (AttendeeMethods.DeleteAttendee(sessionId, testAddAttendee.AttendanceCode))
+                        HEADER("Deleting newly created attendee {0}", testAddAttendee.attendance_code);
+                        if (AttendeeMethods.DeleteAttendee(sessionId, testAddAttendee.attendance_code))
                         {
                             OK("Deleted attendee");
                         }

@@ -1,5 +1,4 @@
 ﻿using Perculus.XSDK.Models;
-using Perculus.XSDK.Models.PostViews;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -52,7 +51,7 @@ namespace Perculus.XSDK.ExampleApp
         {
             var perculus = Common.CreatePerculusClient();
 
-            PostUserView user = new PostUserView
+            PostUserView model = new PostUserView
             {
                 email = email,
                 username = username,
@@ -61,35 +60,32 @@ namespace Perculus.XSDK.ExampleApp
                 surname = "User",
                 expires_at = DateTime.Now.AddDays(5),
                 password = "password",
-                role = "u",
-                status = Models.Enum.UserActiveStatus.Active
+                role = "u"
             };
 
-            UserView createdUser = null;
-            createdUser = perculus.Users.CreateUser(user, out ApiErrorResponse error);
+            UserView user = perculus.Users.CreateUser(model, out ApiErrorResponse error);
 
             if (error != null)
             {
                 Common.HandleErrorResponse(error);
             }
 
-            if (createdUser != null && !String.IsNullOrEmpty(createdUser.user_id))
+            if (user != null && !String.IsNullOrEmpty(user.user_id))
             {
-                return createdUser.user_id;
+                return user.user_id;
             }
 
             return null;
         }
 
 
-        public static string UpdateUser(string userId, UserView user = null)
+        public static string UpdateUser(string userId, PostUserView model = null)
         {
             var perculus = Common.CreatePerculusClient();
-            if (user is null)
+            if (model is null)
             {
-                user = new Models.UserView
+                model = new PostUserView
                 {
-                    user_id = userId,
                     name = "New Name",
                     email = "user-" + DateTimeOffset.UtcNow.ToUnixTimeSeconds() + "@address.com",
                     lang = "tr-TR",
@@ -98,17 +94,17 @@ namespace Perculus.XSDK.ExampleApp
                     expires_at = DateTime.Now.AddDays(5),
                     password = "password",
                     role = "u",
-                    status = Models.Enum.ActiveStatus.Active
+                    active = true
                 };
             }
             else
             {
-                user.name = "Test New";
-                user.surname = "Newsurname";
-                user.role = "a";
+                model.name = "Test New";
+                model.surname = "Newsurname";
+                model.role = "a";
             }
 
-            user = perculus.Users.UpdateUser(user, out ApiErrorResponse error);
+            UserView user = perculus.Users.UpdateUser(userId, model, out ApiErrorResponse error);
 
             if (error != null)
             {

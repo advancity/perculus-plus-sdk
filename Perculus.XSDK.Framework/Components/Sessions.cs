@@ -1,6 +1,5 @@
 ﻿using Perculus.XSDK.Extensions;
 using Perculus.XSDK.Models;
-using Perculus.XSDK.Models.PostViews;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -100,14 +99,14 @@ namespace Perculus.XSDK.Components
         /// </summary>
         /// <param name="session"></param>
         /// <returns></returns>
-        public SessionView UpdateSession(SessionView session, out ApiErrorResponse error)
+        public SessionView UpdateSession(string session_id, PostSessionView session, out ApiErrorResponse error)
         {
             if (session is null)
             {
                 throw new ArgumentNullException(nameof(session));
             }
 
-            var request = HttpWebClient.CreateWebRequest("PUT", BuildRoute($"session/{session.session_id}"));
+            var request = HttpWebClient.CreateWebRequest("PUT", BuildRoute($"session/{session_id}"));
             var response = HttpWebClient.SendWebRequest(request, session);
             SessionView sessionView = null;
             error = null;
