@@ -6,6 +6,7 @@ using System.Net;
 using System.Text;
 using System.Linq;
 using Newtonsoft.Json;
+using Perculus.XSDK.Models.PostViews;
 
 namespace Perculus.XSDK.Components
 {

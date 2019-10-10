@@ -1,4 +1,5 @@
 ﻿using Perculus.XSDK.Models;
+using Perculus.XSDK.Models.PostViews;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -93,8 +94,7 @@ namespace Perculus.XSDK.ExampleApp
                     username = "user-" + DateTimeOffset.UtcNow.ToUnixTimeSeconds(),
                     expires_at = DateTime.Now.AddDays(5),
                     password = "password",
-                    role = "u",
-                    active = true
+                    role = "u"               
                 };
             }
             else

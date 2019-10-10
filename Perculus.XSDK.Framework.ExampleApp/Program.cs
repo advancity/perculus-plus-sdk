@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Perculus.XSDK.Models;
+using Perculus.XSDK.Models.PostViews;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -58,7 +59,6 @@ namespace Perculus.XSDK.ExampleApp
                         HEADER("Updating user");
                         PostUserView updatingUser = new PostUserView()
                         {
-                            active = true,
                             email = user.email,
                             expires_at = user.expires_at,
                             lang = user.lang,
